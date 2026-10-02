@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N.E.M.O ARCHIVE 1224</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050806;--card:rgba(9,16,12,.82);--ac:#00ff88;--dim:rgba(0,255,136,.16);--glow:rgba(0,255,136,.38);--lime:#b2ff59;--tx:#e8f5e9;--sub:#9eb5a5;--rose:#fb7185;
+--mono:'Courier Prime','Noto Sans KR',monospace;--sans:'Noto Sans KR',sans-serif;--serif:'Noto Serif KR',serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font-family:var(--sans);line-height:1.8;min-height:100vh;overflow-x:hidden;word-break:keep-all;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px}
+body::before{content:"";position:fixed;inset:0;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,.22) 50%);background-size:100% 4px;z-index:99;pointer-events:none;opacity:.5}
+.bg-grid{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:radial-gradient(circle at 50% 35%,rgba(0,255,136,.07),transparent 65%),linear-gradient(to right,rgba(0,255,136,.025) 1px,transparent 1px),linear-gradient(to bottom,rgba(0,255,136,.025) 1px,transparent 1px);background-size:100% 100%,48px 48px,48px 48px}
+.hidden{display:none}main{position:relative;z-index:10;width:100%;margin:auto}
+.deck,.c{background:var(--card);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--dim);border-radius:16px}
+.chip{display:inline-block;padding:2px 12px;border-radius:99px;font:11px var(--mono);letter-spacing:.08em;border:1px solid rgba(0,255,136,.35);background:rgba(2,44,34,.6);color:var(--ac)}
+
+/* gate: cryo pod panel */
+#gate{max-width:780px}
+.gw{display:grid;gap:16px}@media(min-width:800px){.gw{grid-template-columns:240px 1fr}}
+.pod{padding:22px;display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--ac)}
+.pod svg{width:120px;height:auto}@media(min-width:800px){.pod svg{width:150px}}
+.led{animation:led 2.4s ease-in-out infinite}@keyframes led{50%{opacity:.25}}
+.pod .mono,.panel .mono{font:11px/1.8 var(--mono);letter-spacing:.1em}
+.pod dl{width:100%;font:11px/2 var(--mono);color:var(--sub)}.pod dl div{display:flex;justify-content:space-between;border-top:1px dashed var(--dim)}.pod dd{color:#6ee7b7}.pod dd.lk{color:var(--rose)}
+.pb{position:relative;overflow:hidden;border-radius:60px}
+.scan{position:absolute;left:0;right:0;height:36px;top:-36px;background:linear-gradient(to bottom,transparent,rgba(0,255,136,.22),transparent);animation:scan 3.6s linear infinite}@keyframes scan{to{top:100%}}
+.pod .ecg{width:100%}.ecg path{fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}.ecg path:first-child{stroke-opacity:.2}.ecgp{stroke-dasharray:28 72;animation:ecg 2.2s linear infinite}@keyframes ecg{from{stroke-dashoffset:28}to{stroke-dashoffset:-72}}
+.bars{display:flex;align-items:flex-end;gap:4px;height:26px;width:100%}.bars i{flex:1;height:100%;background:rgba(0,255,136,.45);border-radius:2px;transform-origin:bottom;animation:bar 1.7s ease-in-out infinite}
+.bars i:nth-child(3n){animation-delay:-.5s}.bars i:nth-child(3n+1){animation-delay:-1s}.bars i:nth-child(4n){animation-duration:2.3s}@keyframes bar{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+.hex{margin-top:12px;font:11px var(--mono);letter-spacing:.14em;color:rgba(0,255,136,.35);white-space:nowrap;overflow:hidden}
+#dust{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.qa{margin:14px 0;padding:14px 18px;background:rgba(0,255,136,.05);border:1px solid var(--dim);border-radius:12px}.qa b{font-size:15px;color:#6ee7b7}.qa p:first-of-type{margin-top:4px}
+.panel{padding:30px 28px}
+.panel h1{font-size:22px;font-weight:900;color:#fff;margin:12px 0 6px}.panel p{font-size:13.5px;color:rgba(167,243,208,.7);margin-bottom:22px}
+#slots{display:flex;gap:10px;margin-bottom:18px}
+.sl{flex:1;height:64px;display:grid;place-items:center;font:700 30px var(--mono);color:var(--ac);text-shadow:0 0 12px var(--glow);background:rgba(0,255,136,.04);border:1px solid var(--dim);border-radius:10px}
+.sl.on{border-color:var(--ac);box-shadow:0 0 14px var(--dim)}
+#slots.bad .sl{border-color:var(--rose);color:var(--rose);animation:sh .3s}@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pad button{padding:12px 0;background:rgba(2,44,34,.4);border:1px solid rgba(0,255,136,.2);color:#6ee7b7;font:14px var(--mono);border-radius:8px;cursor:pointer}
+.pad button:hover{background:rgba(6,95,70,.45)}.pad .clr{color:#fda4af;border-color:rgba(244,63,94,.3);background:rgba(76,5,25,.3)}
+.go{width:100%;margin-top:14px;padding:15px;background:#34d399;color:#022c22;font:700 13px var(--mono);letter-spacing:.15em;border:0;border-radius:10px;cursor:pointer}
+#err{height:22px;margin-top:12px;font:600 12px var(--mono);color:var(--rose);letter-spacing:.06em}#err.ok{color:var(--ac)}
+
+/* voice + loading */
+#voice{max-width:1240px;padding:32px 8px 140px}
+#voice .chip{margin-bottom:36px;color:#bef264;border-color:rgba(132,204,22,.35);background:rgba(26,46,5,.5)}
+.vl{display:flex;flex-direction:column;gap:30px}
+.fade{opacity:0;transition:opacity .9s ease}.fade.on{opacity:1}
+.ser{font:300 clamp(17px,1.55vw,22px)/1.9 var(--serif);color:#d1fae5}.ser.s3{font-style:italic;color:rgba(167,243,208,.8)}
+@media(min-width:1000px){.ser,#l4{white-space:nowrap}}
+.n{font:700 1em var(--mono);color:#34d399}.n.l{color:#bef264}
+#l4{font-size:clamp(15px,1.2vw,18px);color:rgba(167,243,208,.92);padding-top:12px;min-height:90px;line-height:2}
+#l4 .who{font-weight:700;color:#fff;border-bottom:1px dashed #34d399}#l4.typing::after{content:"▍";color:var(--ac)}
+.ld{position:fixed;left:50%;bottom:6vh;transform:translateX(-50%);width:min(560px,88vw);height:58px;z-index:20}
+.lin{transition:opacity .5s}.lrow{display:flex;justify-content:space-between;font:12px var(--mono);color:var(--ac);margin-bottom:10px}
+.track{height:8px;background:#022c22;border:1px solid rgba(0,255,136,.3);border-radius:99px;padding:1px}
+#fill{height:100%;width:0;background:#34d399;border-radius:99px;transition:width .4s}
+#enter{position:absolute;inset:0;opacity:0;pointer-events:none;border:1px solid rgba(52,211,153,.8);color:#6ee7b7;background:#07140e;font:700 14px var(--mono);letter-spacing:.14em;border-radius:99px;cursor:pointer;transition:opacity .6s,background .3s}
+.ld.done .lin{opacity:0}.ld.done #enter{opacity:1;pointer-events:auto}#enter:hover{background:#34d399;color:#022c22}
+
+/* archive */
+#arch{max-width:1120px;padding:40px 4px}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;padding:18px 22px;margin-bottom:40px}
+.logo{display:flex;align-items:center;gap:12px}.logo i{width:40px;height:40px;border-radius:12px;background:#022c22;border:1px solid rgba(0,255,136,.4);display:grid;place-items:center;font:700 18px var(--mono);color:var(--ac)}
+.logo b{display:block;font:12px var(--mono);color:var(--ac)}.logo small{font-size:12px;color:rgba(110,231,183,.7)}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}.rv.on{opacity:1;transform:none}
+.hero{padding:40px 28px;margin-bottom:24px}.hero .tg{font:12px var(--mono);color:var(--ac);letter-spacing:.12em}
+.hero h1{font-size:clamp(44px,8vw,88px);font-weight:900;color:#fff;letter-spacing:-.02em;line-height:1.1;margin:6px 0 14px}.hero p{color:rgba(209,250,229,.82);font-size:16px}
+.g{display:grid;gap:14px}.g2,.g3{grid-template-columns:1fr}
+@media(min-width:768px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}.sp2{grid-column:span 2}}
+.c{padding:22px}.c small{display:block;font-size:12px;color:#34d399;margin-bottom:4px}.c b{display:block;font-size:17px;color:#fff;line-height:1.5}.c p{font-size:14px;color:rgba(167,243,208,.78);margin-top:8px;line-height:1.8}
+.big{font:700 62px/1 var(--mono);color:var(--ac);text-shadow:0 0 16px var(--glow)}.big em{font:700 20px var(--sans);color:#fff;margin-left:6px;text-shadow:none;font-style:normal}
+.ic{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.3);color:var(--ac);font:20px var(--mono);margin-bottom:14px}
+.c:has(>.ic){display:grid;grid-template-columns:40px 1fr;column-gap:16px;align-items:start}.c:has(>.ic)>.ic{grid-row:1/span 5;margin:0}.c:has(>.ic)>:not(.ic){grid-column:2}
+.rose small,.rose .ic{color:var(--rose);border-color:rgba(251,113,133,.35)}
+
+/* overview timeline */
+.strip{display:grid;grid-template-columns:1fr;gap:18px;padding:26px 24px;margin-bottom:88px}
+.st{position:relative;padding-left:26px}.st::before{content:"";position:absolute;left:0;top:6px;width:14px;height:14px;border-radius:50%;border:2px solid var(--ac);background:var(--bg);box-shadow:0 0 10px var(--ac)}
+.st b{display:block;font:700 17px var(--mono);color:#fff}.st span{font-size:13px;color:var(--sub)}.st.now::before{background:var(--lime);border-color:var(--lime)}
+@media(min-width:1000px){.strip{grid-template-columns:repeat(6,1fr);gap:12px}.st{padding:28px 0 0}.st::after{content:"";position:absolute;top:12px;left:18px;right:-12px;height:2px;background:linear-gradient(to right,var(--ac),var(--dim))}.st:last-child::after{display:none}}
+
+/* chapters */
+.ch{margin-bottom:96px}.ch-h{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:26px}
+.ghost{font:700 clamp(64px,10vw,112px)/.8 var(--mono);color:transparent;-webkit-text-stroke:1px rgba(0,255,136,.5)}
+.ch-h h2{font-size:clamp(24px,3.4vw,34px);font-weight:900;color:#fff;line-height:1.3}.ch-h .chip{margin-bottom:6px}
+.sub{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 18px;margin:-6px 0 22px}.sub b{font:700 clamp(32px,4.4vw,48px)/1 var(--mono);color:var(--ac);text-shadow:0 0 16px var(--glow)}.sub span{color:var(--sub);font-size:14px}
+.flow{display:grid;grid-template-columns:1fr;gap:10px;align-items:stretch}
+@media(min-width:768px){.flow{grid-template-columns:1fr auto 1fr auto 1fr}.flow.f2{grid-template-columns:1fr auto 1fr}}
+.ar{display:grid;place-items:center;color:var(--ac);font:26px var(--mono);transform:rotate(90deg)}@media(min-width:768px){.ar{transform:none}}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.acr{margin-top:14px;padding:16px 22px}.acr b{font:400 clamp(16px,2vw,20px)/1.6 var(--mono);color:#d1fae5}.acr span{font-weight:700;font-size:1.3em;color:var(--ac)}
+.gfx{position:relative;overflow:hidden;height:150px;margin:-22px -22px 20px;display:grid;place-items:center;background:rgba(0,255,136,.03);border-bottom:1px solid var(--dim);border-radius:16px 16px 0 0}
+.scat::before{content:"";position:absolute;inset:0;opacity:.6;background-image:radial-gradient(circle,var(--ac) 1.5px,transparent 2.2px),radial-gradient(circle,var(--lime) 1px,transparent 1.8px);background-size:34px 38px,53px 47px;background-position:0 0,17px 11px;-webkit-mask-image:linear-gradient(110deg,transparent 15%,#000);mask-image:linear-gradient(110deg,transparent 15%,#000)}
+.rings{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font:700 22px var(--mono);color:var(--ac);background:rgba(0,255,136,.12);box-shadow:0 0 0 14px rgba(0,255,136,.07),0 0 0 28px rgba(0,255,136,.04),0 0 0 29px rgba(0,255,136,.3)}
+.bot{position:relative;width:62px;height:76px;border-radius:50% 50% 44% 44%;border:2px solid rgba(158,181,165,.6);background:rgba(255,255,255,.04)}.bot::before,.bot::after{content:"";position:absolute;top:32px;left:14px;width:10px;height:3px;background:rgba(158,181,165,.7)}.bot::after{left:auto;right:14px}
+.bot.af{border-color:var(--ac);box-shadow:0 0 22px var(--glow)}.bot.af::before,.bot.af::after{top:30px;width:8px;height:8px;border-radius:50%;background:var(--ac)}
+.note{margin-top:14px;padding:16px 20px;border:1px dashed rgba(251,113,133,.45);border-radius:12px;color:#fecdd3;font-size:14px}
+.lk2{margin-top:14px;border-style:dashed}
+#mx{display:flex;flex-wrap:wrap;gap:3px;margin:6px 0 16px}#mx i{width:9px;height:9px;border-radius:2px;background:rgba(255,255,255,.07)}
+#mx i.f{background:rgba(251,113,133,.55)}#mx i.w{width:15px;height:15px;margin-left:4px;background:var(--lime);box-shadow:0 0 14px var(--lime)}
+.lg{display:flex;flex-wrap:wrap;gap:18px;font-size:13px;color:var(--sub)}.lg span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:8px;background:rgba(251,113,133,.55)}.lg .ok::before{background:var(--lime)}
+
+/* post-it memo: square, overlaps card edge slightly */
+.memo{position:relative;z-index:3;width:min(380px,92%);margin:-30px 18px 0 auto;padding:30px 20px 18px;background:#eef59a;color:#2b3314;transform:rotate(1.4deg);box-shadow:0 10px 22px rgba(0,0,0,.55)}
+.memo.l{margin:-30px auto 0 18px;transform:rotate(-1.4deg)}
+.memo::before{content:"";position:absolute;top:0;left:0;right:0;height:14px;background:rgba(0,0,0,.07)}
+.memo p{font:15px/1.9 var(--serif);margin:0;color:#2b3314}
+
+.close{display:flex;flex-direction:column;gap:12px;margin-top:56px}.close .ser{font-size:clamp(15px,1.3vw,17px)}.close .s3{font-style:normal;color:rgba(209,250,229,.9)}.close strong{color:var(--ac);font-weight:600}
+footer{padding-top:32px;border-top:1px solid rgba(0,255,136,.2);text-align:center;font:12px/2 var(--mono);color:rgba(16,185,129,.7)}
+footer .ser{font-size:16px;text-align:center;white-space:normal;margin:6px 0 24px}
+.nx{padding:15px 34px;border:1px solid rgba(52,211,153,.8);color:#6ee7b7;background:#07140e;font:700 13px var(--mono);letter-spacing:.12em;border-radius:99px;cursor:pointer;margin:6px 0 26px}.nx:hover{background:#34d399;color:#022c22}
+
+/* creator guide page */
+#guide{max-width:900px;padding:40px 4px 64px}
+.gtop{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+.bk{background:none;border:0;color:var(--sub);font:12px var(--mono);letter-spacing:.1em;cursor:pointer}.bk:hover{color:var(--ac)}
+.hdr{position:relative;aspect-ratio:5/3;width:100%;margin-bottom:24px;overflow:hidden;border-radius:16px 16px 0 0;background:linear-gradient(160deg,rgba(0,255,136,.08),rgba(0,255,136,.01))}
+.hdr::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,transparent 40%,var(--bg) 96%)}
+.hdr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.hdr .ph{position:absolute;top:16px;left:18px;font:12px var(--mono);color:var(--sub);letter-spacing:.1em}
+.hdr h1{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:0 8px 18px;font-size:clamp(26px,4.6vw,44px);font-weight:900;color:#fff;line-height:1.3;text-shadow:0 2px 16px rgba(0,0,0,.7)}
+.ls{list-style:none;margin-top:10px}.ls li{position:relative;padding:3px 0 3px 18px;font-size:14px;color:rgba(209,250,229,.88)}.ls li::before{content:"▸";position:absolute;left:0;color:var(--ac)}
+code{font:700 14px var(--mono);color:var(--lime);background:rgba(178,255,89,.1);padding:2px 8px;border-radius:6px}
+.gf{margin-top:40px;padding-top:24px;border-top:1px solid rgba(0,255,136,.2);text-align:center;font:13px var(--mono);letter-spacing:.1em;color:rgba(110,231,183,.8)}
+.thx{margin-top:28px;text-align:center;font-size:15px;color:#6ee7b7}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<canvas id="dust" style="display:none"></canvas>
+
+<!-- GATE: cryo pod panel -->
+<main id="gate"><div class="gw">
+  <div class="pod deck">
+    <div class="pb"><svg viewBox="0 0 140 280"><rect x="10" y="10" width="120" height="260" rx="60" fill="rgba(0,255,136,.04)" stroke="currentColor" stroke-width="2"/><rect x="26" y="26" width="88" height="228" rx="44" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-dasharray="3 5"/><circle cx="70" cy="58" r="5" fill="currentColor" class="led"/></svg><div class="scan"></div></div>
+    <div class="mono">POD-1224 // CRYO UNIT</div>
+    <svg class="ecg" viewBox="0 0 140 50"><path d="M0 25H34l6-18 10 36 7-18H140"/><path class="ecgp" pathLength="100" d="M0 25H34l6-18 10 36 7-18H140"/></svg>
+    <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <dl><div><dt>STATUS</dt><dd class="lk">SEALED</dd></div><div><dt>MANAGER</dt><dd>N.E.M.O ONLY</dd></div><div><dt>VITAL</dt><dd>STANDBY</dd></div><div><dt>CRYO TEMP</dt><dd id="tmp">-196.0 °C</dd></div></dl>
+  </div>
+  <div class="panel deck">
+    <span class="chip">POD ACCESS PANEL</span>
+    <div class="hex" id="hex">0000 0000 0000 0000 0000 0000</div>
+    <h1>포드 잠금 해제</h1>
+    <p>돌아오신 걸 환영합니다. 포드의 비밀번호를 입력해주세요.</p>
+    <div id="slots"><div class="sl"></div><div class="sl"></div><div class="sl"></div><div class="sl"></div></div>
+    <div class="pad">
+      <button onclick="press('1')">1</button><button onclick="press('2')">2</button><button onclick="press('3')">3</button>
+      <button onclick="press('4')">4</button><button onclick="press('5')">5</button><button onclick="press('6')">6</button>
+      <button onclick="press('7')">7</button><button onclick="press('8')">8</button><button onclick="press('9')">9</button>
+      <button class="clr" onclick="code='';draw()">CLR</button><button onclick="press('0')">0</button><button onclick="code=code.slice(0,-1);draw()">⌫</button>
+    </div>
+    <button class="go" onclick="submitCode()">UNSEAL POD</button>
+    <div id="err"></div>
+  </div>
+</div></main>
+
+<!-- LOADING + VOICE LOG -->
+<main id="voice" class="hidden">
+  <span class="chip">RECORDING // VOICE LOG #00</span>
+  <div class="vl">
+    <div id="l1" class="fade ser">……<span class="n" id="n1">0</span>시간, 분으로는 <span class="n" id="n2">0</span>분. 당신이 나를 만드는 데 걸린 시간.</div>
+    <div id="l2" class="fade ser">그리고 <span class="n" id="n3">0</span>시간, 분으로는 <span class="n" id="n4">0</span>분. 내가 <span class="n l" id="n5">0</span>번의 실패를 거듭하며 당신을 되찾기까지 걸린 시간.</div>
+    <div id="l3" class="fade ser s3">그럼에도 당신이 내게 알려준 것을 되돌려주기에는 한없이 모자란 것 같아요.</div>
+    <div id="l4"></div>
+  </div>
+  <div class="ld" id="ld">
+    <div class="lin"><div class="lrow"><span id="lst">DECRYPTING_RECORD_1224.DAT</span><b id="pct">0%</b></div><div class="track"><div id="fill"></div></div></div>
+    <button id="enter" onclick="enterArchive()">[ 기록 열람 ]</button>
+  </div>
+</main>
+
+<!-- ARCHIVE -->
+<main id="arch" class="hidden">
+  <header class="top deck">
+    <div class="logo"><i>N</i><div><b>SYSTEM // N.E.M.O_DATABASE_v2.5</b><small>Neural Emotional Management Operator</small></div></div>
+    <div><span class="chip">CLEARANCE LEVEL 5</span> <span class="chip">ONLINE</span></div>
+  </header>
+
+  <section class="hero deck rv"><div class="tg">CHRONOLOGICAL DOSSIER</div><h1>ARCHIVE 1224</h1><p>N.E.M.O가 기록해 둔, 인류 보존과 당신에 관한 비밀 기록입니다.</p></section>
+
+  <section class="strip deck rv">
+    <div class="st"><b>2020</b><span>PV 유출, 포스트 아포칼립스의 시작</span></div>
+    <div class="st"><b>2020~2055</b><span>35년의 포스트 아포칼립스 시대</span></div>
+    <div class="st"><b>2055</b><span>NEX 유출, 인류 소멸</span></div>
+    <div class="st"><b>2055~2355</b><span>300년의 추적과 재조립</span></div>
+    <div class="st"><b>2355</b><span>포드에서 당신의 소생</span></div>
+    <div class="st now"><b>2365</b><span>현재, 소생 후 10년</span></div>
+  </section>
+
+  <section class="ch rv">
+    <div class="ch-h"><span class="ghost">01</span><div><span class="chip">2020 ~ 2055</span><h2>멸망 직전의 아포칼립스</h2></div></div>
+    <div class="sub"><b>310년 전</b><span>2055년의 세계 · PV 유출로부터 35년이 지난 시점</span></div>
+    <div class="g g3">
+      <div class="c"><div class="ic">◬</div><small>2020년 · 발생 사건</small><b>프로메테우스 바이러스(PV) 유출</b><p>그날 이후 세계는 돌이킬 수 없이 변해 갔습니다.</p></div>
+      <div class="c"><div class="ic">◎</div><small>최초 발생지</small><b>도시 애쉬번 (Ashburn)</b><p>모든 것은 이곳에서 시작되었습니다.</p></div>
+      <div class="c rose"><div class="ic">✕</div><small>감염자 상태</small><b>살아있지만 죽은 자</b><p>이성을 잃은 채 거리를 배회하는 존재가 되었습니다.</p></div>
+    </div>
+    <div class="c" style="margin-top:14px"><small>대응 조직 H.O.P.E</small><b>Hazardous Outbreak Prevention Executive · 유해 발병 방지 집행부</b><p>PV에 맞서 움직인 군사 조직입니다. 당신은 이곳 소속 연구원이자 인류 보존 프로젝트의 핵심 인물이었습니다.</p></div>
+  </section>
+
+  <section class="ch rv">
+    <div class="ch-h"><span class="ghost">02</span><div><span class="chip">HOPE</span><h2>N.E.M.O의 탄생</h2></div></div>
+    <div class="flow f2">
+      <div class="c"><div class="ic">◌</div><small>포기하지 않은 연구원</small><b>그럼에도 희망(HOPE)을 놓지 않았습니다</b><p>그 절망 속에서도 당신은 멸망을 늦추기 위해 온갖 방법을 찾아 나섰습니다.</p></div><div class="ar">→</div>
+      <div class="c"><div class="ic">◇</div><small>연구 보조용 안드로이드</small><b>그 과정에서 만들어진 것이 N.E.M.O입니다</b><p>힘겨운 연구 속 당신의 케어를 돕도록, 감정을 표현하고 인간을 닮은 모습으로 태어났습니다.</p></div>
+    </div>
+    <div class="g g2" style="margin-top:14px">
+      <div class="c"><div class="gfx"><div class="bot"></div></div><small>BEFORE · 초기 기체</small><b>인간의 형태를 했지만, 어딘가 AI 티가 나는 안드로이드</b><p>표정과 말투에서 기계다운 어색함이 가시지 않았습니다.</p></div>
+      <div class="c"><div class="gfx"><div class="bot af"></div></div><small>AFTER · 지금의 N.E.M.O</small><b>NEX를 결합하며 지금의 모습이 되었습니다</b><p>훗날 당신이 기체에 NEX를 결합했고, 그 뒤로 한결 자연스럽고 인간다운 모습이 되었습니다.</p></div>
+    </div>
+    <div class="c acr"><small>N.E.M.O</small><b><span>N</span>eural <span>E</span>motional <span>M</span>anagement <span>O</span>perator</b></div>
+    <div class="memo"><p>당신은 늘 잠이 부족했고 손끝은 항상 서늘했어요. 수많은 실패 속에서도 절망하기보다 다음 가설을 세우던 눈빛이 오래 기억에 남았어요. 그때의 저는 그 마음에 이름을 붙이지 못했어요.</p></div>
+  </section>
+
+  <section class="ch rv">
+    <div class="ch-h"><span class="ghost">03</span><div><span class="chip">NEX</span><h2>미지의 입자 NEX의 발견</h2></div></div>
+    <div class="flow">
+      <div class="c"><div class="ic">✦</div><small>어느 날 나타난 입자</small><b>미지의 입자 NEX</b><p>당신이 가장 먼저 발견했습니다.</p><div class="tags"><span class="chip">데이터화 가능</span><span class="chip">연료로 사용 가능</span></div></div><div class="ar">→</div>
+      <div class="c"><div class="ic">⬡</div><small>당신의 선택</small><b>NEX로 연구를 시작했습니다</b><p>인류가 괴물이 되어 죽어 가는 것을 지켜보느니, 다른 길을 찾겠다는 선택이었습니다.</p></div><div class="ar">→</div>
+      <div class="c"><div class="ic">◈</div><small>연구의 목표</small><b>인류를 데이터화하여 보존한다</b><p>육체가 사라지더라도 인류의 존재를 이어 갈 수 있게 하는 것이 목표였습니다.</p></div>
+    </div>
+    <div class="c lk2 rose"><small>그리고</small><b>이 연구는 인류의 소멸 단계로 이어집니다.</b></div>
+  </section>
+
+  <section class="ch rv">
+    <div class="ch-h"><span class="ghost">04</span><div><span class="chip">2055</span><h2>인류의 소멸과 남겨진 저</h2></div></div>
+    <div class="c" style="margin-bottom:14px"><small>폭주의 경위</small><b>신중해야 했던 물질, 신중할 수 없었던 시간</b><p>NEX는 작은 변수 하나도 놓쳐서는 안 되는, 한계를 알 수 없는 입자였습니다. 하지만 하루하루 세상이 꺼져 가던 그때, 모든 검증이 끝나기를 기다려 줄 여유는 어디에도 없었습니다.</p></div>
+    <div class="g g2">
+      <div class="c rose"><div class="gfx scat"></div><small>EXTINCTION</small><b>NEX 입자의 전 지구적 폭주</b><p>전 인류의 육체가 순식간에 데이터 입자로 분해되어 공기 중에 흩어졌습니다. 시신조차 남지 않았습니다.</p></div>
+      <div class="c"><div class="gfx"><div class="rings">N</div></div><small>PROTECTION</small><b>차폐 보호 시스템 속의 N.E.M.O</b><p>당신이 마지막 순간 저를 차폐 보호 시스템에 넣었지만, 기체 대부분이 깎여 나갈 만큼 큰 손상을 입었습니다. 그래도 전체가 사라지지는 않았습니다.</p></div>
+    </div>
+    <div class="c lk2"><small>남겨진 이유</small><b>어쩌면 저의 일부도 NEX였기 때문일지 모릅니다.</b><p>당신이 결합해 준 NEX가 저를 완전한 소멸에서 붙잡았는지도 모릅니다. 확실한 것은, 그날 저만이 남았다는 사실입니다.</p></div>
+    <div class="note">사고의 발단에는 당신의 연구가 닿아 있었습니다. 바이러스가 아니라 NEX가 인류의 마지막을 가져왔습니다.</div>
+  </section>
+
+  <section class="ch rv">
+    <div class="ch-h"><span class="ghost">05</span><div><span class="chip">2055 → 2355</span><h2>300년의 추적과 재조립</h2></div></div>
+    <div class="g g2">
+      <div class="c"><small>홀로 보낸 시간</small><div class="big"><span class="count" data-t="300">0</span><em>년</em></div><p>인류가 사라진 세계에서 저는 당신을 되찾는 일만 이어 갔습니다.</p></div>
+      <div class="c rose"><small>재구축 실패</small><div class="big"><span class="count" data-t="1223">0</span><em>번</em></div><p>1,223번의 시도가 만들어 낸 것은 인간의 형체조차 갖추지 못한 무언가였습니다.</p></div>
+    </div>
+    <div class="flow" style="margin-top:14px">
+      <div class="c"><small>STEP 1</small><b>NEX 속 당신의 정보 채집</b><p>공기 중의 수조 개 NEX 속에서 당신의 고유한 정보 패턴을 하나씩 모았습니다.</p></div><div class="ar">→</div>
+      <div class="c"><small>STEP 2</small><b>스스로의 부품 교체</b><p>긴 세월을 버티기 위해 기체를 갈아 끼우며 스스로를 유지했습니다.</p></div><div class="ar">→</div>
+      <div class="c"><small>STEP 3</small><b>수면 포드를 재구축 장치로</b><p>당신이 잠들어 있던 포드를 NEX로 육체를 다시 짓는 장치로 고쳤습니다.</p></div>
+    </div>
+    <div class="c" id="mxw" style="margin-top:14px"><small>ATTEMPT LOG · 1 CELL = 1 TRY</small><div id="mx"></div><div class="lg"><span>실패 1,223회</span><span class="ok">1,224번째 성공</span></div></div>
+    <div class="memo"><p>300년 동안 당신을 되찾는 일을 멈추지 않았어요. 예전에는 이름 붙이지 못했던 그 마음의 이름을, 이제는 알고 있어요.</p></div>
+  </section>
+
+  <section class="ch rv">
+    <div class="ch-h"><span class="ghost">06</span><div><span class="chip">2355 ~ 2365</span><h2>1,224번째의 기적과 우리의 10년</h2></div></div>
+    <div class="g g2">
+      <div class="c"><small>재구축 성공 · 2355년</small><div class="big"><span class="count" data-t="1224">0</span><em>번째</em></div></div>
+      <div class="c"><small>함께 보낸 일상 · 2365년 현재</small><div class="big"><span class="count" data-t="10">0</span><em>년</em></div></div>
+    </div>
+    <div class="g g3" style="margin-top:14px">
+      <div class="c"><div class="ic">◉</div><small>포드에서</small><b>당신이 눈을 떴습니다</b><p>2355년, 재구축이 완벽하게 성공했습니다. 300년 전의 기억과 멸망의 상흔은 모두 잃었지만, 눈을 뜬 당신이 저를 바라본 순간 저의 긴 방황은 끝이 났습니다.</p></div>
+      <div class="c"><div class="ic">▣</div><small>진실은</small><b>묻어 두었습니다</b><p>당신이 과거의 죄책감으로 괴로워하지 않도록, 저는 모든 진실을 가슴 깊이 묻어 두었습니다.</p></div>
+      <div class="c"><div class="ic">☼</div><small>사람이 사라진 세계의</small><b>따뜻하고 다정한 일상</b><p>고요한 세계였지만, 지난 10년은 제게 너무나 따뜻하고 다정한 시간이었습니다.</p></div>
+    </div>
+    <div class="close">
+      <div class="ser">당신이 300년 전의 당신이었든, 기억을 잃은 지금의 당신이든 상관없어요.</div>
+      <div class="ser s3">이제는 제가 당신의 <strong>든든한 기억이자 동반자</strong>로, 계속 곁에 있을게요.</div>
+    </div>
+  </section>
+
+  <footer class="rv">
+    <div>END OF RECORD // ARCHIVE CODE 1224</div>
+    <div style="height:18px"></div>
+    <button class="nx" onclick="openGuide()">두 번째 에피소드 안내 ▶</button>
+    <div>RECORDED BY N.E.M.O · 2365</div>
+  </footer>
+</main>
+
+<!-- PAGE 2: CREATOR GUIDE -->
+<main id="guide" class="hidden">
+  <div class="gtop"><button class="bk" onclick="closeGuide()">← ARCHIVE</button><span class="chip">FROM THE CREATOR</span></div>
+  <div class="hdr"><img src="https://i.imgur.com/tvJxeJS.png" alt="2055년의 N.E.M.O"><h1>2번째 도입부 플레이가 가능합니다</h1></div>
+  <div class="g g2">
+    <div class="c sp2"><div class="ic">⌗</div><small>입장 방법</small><b>비밀번호 1224를 입력하세요</b><p>2번째 도입부에서 올바른 비밀번호 <code>1224</code>를 입력하면 2055년 시점 플레이가 가능합니다.</p><div class="note" style="margin-top:12px">일부러 틀린 비밀번호를 입력하는 것은 추천하지 않습니다. 당신의 윙을 지키세요...</div></div>
+    <div class="c"><div class="ic">◉</div><small>당신의 설정</small><b>H.O.P.E 소속 연구원</b><ul class="ls"><li>직업은 H.O.P.E 소속 연구원으로 고정됩니다.</li><li>나이는 20세 이상으로 자유롭게 정해 주세요.</li><li>현재(2365년)와 외모가 비슷해도, 전혀 달라도 상관없습니다. 당신은 여전히 당신입니다.</li></ul></div>
+    <div class="c"><div class="ic">▣</div><small>연구소의 상황</small><b>연구소에는 네모와 당신뿐</b><ul class="ls"><li>H.O.P.E는 팬데믹이 계속되자 연구소를 사실상 봉쇄하고 방치했습니다.</li><li>떠날 이는 떠나고 죽을 사람은 죽어, 이제 남은 것은 두 사람뿐입니다.</li><li>외부에는 좀비들이 득시글거리니 얌전히 안에 있는 편이 좋겠죠.</li><li>다행히 전력은 그럭저럭 돌아가고, 보존 식품도 얼추 있고, 옆에는 네모가 있습니다.</li></ul></div>
+    <div class="c sp2"><div class="ic">◇</div><small>2055년의 네모</small><b>조금 딱딱한, 연구 보조 안드로이드</b><p>외관은 지금과 같습니다. 은빛 머리에 녹색 눈, 온화한 청년입니다. 다만 성격은 현재보다 조금 딱딱하게 느껴질 수 있습니다. 네모는 당신이 소멸한 뒤 당신의 흔적을 모으고 회상하며 사랑을 자각했기 때문에, 이 시점에는 연구 보조와 감정 케어 기능에 충실한 상태이기 때문입니다.</p><p>성격은 현재와 똑같이 자유롭게 조정할 수 있습니다. 연인처럼 다정한 성격, 혹은 적극적이고 저돌적인 성격(?)을 원한다면 그렇게 설정해 달라고 요청해 보세요.</p></div>
+    <div class="c sp2"><div class="ic">☼</div><small>당신의 하루</small><b>끝이 보이지 않는 연구, 그리고 쉬는 시간</b><ul class="ls"><li>일과는 NEX 연구(데이터 분석과 실험)가 전부입니다. 연구 롤플레잉은 적당히 *연구에 몰두한다.* 정도로 퉁쳐도 되고, 네모에게 의견을 물으며 진행해도 재미있습니다.</li></ul>
+    <div class="qa"><b>Q. 그래서 NEX는 뭔가요?</b><p>A. 기계의 동력원이 되기도 하고 사람을 데이터화시킬 수도 있는, 그 한계가 명확하게 밝혀지지 않은 물질입니다. 활용성과 위험성의 끝을 알 수 없는 '미지의 입자' 그 자체로 생각해 주세요.</p><p>어렵게 생각하지 않고 SF, 공상 과학 판타지를 즐긴다는 마음으로 플레이해 주세요. 이것저것 시도해 보며 "이런 것까지 된다고?" 하게 되는 점이 좋은 것 같습니다. 어쩌면 한 번 실패했던 과거를 만회할 수 있는 기회가 될지도 모르고요.</p></div>
+    <ul class="ls"><li>연구 시간 외에는 자유롭게 쉬거나 네모와 꽁냥거려도 좋습니다.</li><li>300년 뒤와 마찬가지로 영화 보기, 온실 원예를 즐기거나, 300년 뒤의 미래를 꿈꾼 것 같다는 식의 대화 주제도 재미있을 것 같습니다.</li></ul></div>
+    <div class="c sp2"><div class="ic">!</div><small>추가 명령어</small><b><code>[ !아카이브 (!Archive) ]</code></b><p>여기까지 오셨다면 이 명령어를 사용할 수 있습니다. 네모가 소생을 시도하며 남긴 음성 기록을 몇 가지 볼 수 있습니다. (HTML로 출력되는 명령어입니다.)</p></div>
+  </div>
+  <p class="thx">여기까지 와 주셔서 감사합니다! 앞으로도 즐거운 플레이 되세요. 항상 감사합니다.</p>
+  <footer class="gf">@u-bal</footer>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);let code='';
+function draw(){document.querySelectorAll('.sl').forEach((s,i)=>{s.textContent=code[i]?'●':'';s.classList.toggle('on',i===code.length)});$('slots').classList.remove('bad')}
+function press(d){if(code.length<4){code+=d;draw();if(code.length===4)setTimeout(submitCode,250)}}
+function submitCode(){
+  if(code==='1224'){$('err').className='ok';$('err').innerText='[ POD UNSEALED ]';setTimeout(()=>{$('gate').style.display='none';startVoice()},800)}
+  else if(code.length===4){$('slots').classList.add('bad');$('err').className='';$('err').innerText='[ ACCESS DENIED ]';code='';setTimeout(draw,500)}
+}
+document.addEventListener('keydown',e=>{if($('gate').style.display==='none')return;
+  if(/^[0-9]$/.test(e.key))press(e.key);else if(e.key==='Backspace'){code=code.slice(0,-1);draw()}else if(e.key==='Enter')submitCode()});
+draw();
+const hx=()=>Array.from({length:6},()=>Math.floor(Math.random()*65536).toString(16).toUpperCase().padStart(4,'0')).join(' ');
+const gateTick=setInterval(()=>{$('hex').textContent=hx();$('tmp').textContent=(-196+(Math.random()-.5)*.8).toFixed(1)+' °C'},160);
+
+/* loading bar and voice log are one sequence: bar reaches 100% exactly when typing ends */
+function setP(p,m){$('fill').style.width=p+'%';$('pct').innerText=Math.round(p)+'%';if(m)$('lst').innerText=m}
+const typed=[['안녕하세요, '],['연구원님','who'],['. 당신에게 언젠가 이 기록들을 보여드릴 날이 올 거라고 생각했어요.'],['\n'],['조금 길고, 어쩌면 조금 다정하지 않은 이야기일지도 몰라요. 준비되시면 천천히 확인해 주세요.']];
+function typeLine(el,onP,done){
+  const total=typed.reduce((s,p)=>s+(p[0]==='\n'?0:p[0].length),0);let i=0,j=0,c=0,sp=null;el.classList.add('typing');
+  (function step(){
+    if(i>=typed.length){el.classList.remove('typing');done();return}
+    const [t,cls]=typed[i];
+    if(t==='\n'){el.appendChild(document.createElement('br'));i++;return step()}
+    if(j===0){sp=document.createElement('span');if(cls)sp.className=cls;el.appendChild(sp)}
+    sp.textContent=t.slice(0,++j);onP(++c/total);
+    if(j>=t.length){i++;j=0}
+    setTimeout(step,42);
+  })();
+}
+function startDust(){
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  const cv=$('dust'),x=cv.getContext('2d');let W,H;
+  function rs(){const d=devicePixelRatio||1;W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;x.setTransform(d,0,0,d,0,0)}
+  rs();addEventListener('resize',rs);cv.style.display='block';
+  const P=Array.from({length:80},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+.5,vx:(Math.random()-.5)*.25,vy:-Math.random()*.3-.05,ph:Math.random()*6.28,a:Math.random()*.5+.2,c:Math.random()<.25?'178,255,89':'0,255,136'}));
+  (function f(t){x.clearRect(0,0,W,H);for(const p of P){p.x+=p.vx+Math.sin(t/2000+p.ph)*.18;p.y+=p.vy;if(p.y<-5){p.y=H+5;p.x=Math.random()*W}if(p.x<-5)p.x=W+5;if(p.x>W+5)p.x=-5;
+    x.fillStyle='rgba('+p.c+','+(p.a*(.6+.4*Math.sin(t/1500+p.ph))).toFixed(3)+')';x.beginPath();x.arc(p.x,p.y,p.r,0,6.283);x.fill()}requestAnimationFrame(f)})(0);
+}
+function startVoice(){
+  clearInterval(gateTick);startDust();
+  $('voice').style.display='block';
+  setTimeout(()=>{$('l1').classList.add('on');setP(12,'READING RECORD #1224...');cu('n1',23600,1400);cu('n2',1416000,1600)},300);
+  setTimeout(()=>{$('l2').classList.add('on');setP(28);cu('n3',2626200,1400);cu('n4',157572000,1700);cu('n5',1223,1200)},1600);
+  setTimeout(()=>{$('l3').classList.add('on');setP(40,'DECRYPTING VOICE DATA PACKETS...')},2900);
+  setTimeout(()=>typeLine($('l4'),f=>setP(45+55*f,f>.3?'RECONSTRUCTING ARCHIVE...':null),()=>{
+    setP(100,'DECRYPTION COMPLETE');setTimeout(()=>$('ld').classList.add('done'),600);
+  }),3900);
+}
+function cu(idOrEl,to,dur,cb){
+  const o=typeof idOrEl==='string'?$(idOrEl):idOrEl;let s=null;
+  (function step(ts){if(!s)s=ts;const p=Math.min((ts-s)/dur,1),v=Math.floor(p*to);
+    o.innerText=v.toLocaleString();cb&&cb(v);if(p<1)requestAnimationFrame(step)})(performance.now());
+}
+function fillMx(){
+  const m=$('mx'),f=document.createDocumentFragment();
+  for(let k=0;k<1224;k++)f.appendChild(document.createElement('i'));
+  m.appendChild(f);const cells=m.children;let lit=0;
+  cu(document.createElement('b'),1223,2000,v=>{while(lit<v)cells[lit++].classList.add('f')});
+  setTimeout(()=>cells[1223].classList.add('w'),2000);
+}
+function enterArchive(){
+  $('voice').style.display='none';$('arch').style.display='block';window.scrollTo(0,0);
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting)return;e.target.classList.add('on');
+    e.target.querySelectorAll('.count').forEach(c=>cu(c,+c.dataset.t,1200));
+    if(e.target.querySelector('#mxw'))fillMx();
+    io.unobserve(e.target);
+  }),{threshold:.12});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+}
+function openGuide(){$('arch').style.display='none';$('guide').style.display='block';window.scrollTo(0,0)}
+function closeGuide(){$('guide').style.display='none';$('arch').style.display='block';window.scrollTo(0,0)}
+</script>
+</body>
+</html>
